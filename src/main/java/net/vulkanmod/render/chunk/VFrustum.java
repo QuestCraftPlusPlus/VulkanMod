@@ -1,9 +1,9 @@
 package net.vulkanmod.render.chunk;
 
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector4f;
 import net.vulkanmod.render.chunk.util.Util;
 import org.joml.FrustumIntersection;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 public class VFrustum {
 
@@ -55,7 +55,7 @@ public class VFrustum {
 
     private void calculateFrustum(Matrix4f modelViewMatrix, Matrix4f projMatrix) {
         Matrix4f matrix4f = projMatrix.copy();
-        matrix4f.multiply(modelViewMatrix);
+        matrix4f.mul(modelViewMatrix);
         matrix4f.transpose();
         this.viewVector = new Vector4f(0.0F, 0.0F, 1.0F, 0.0F);
         this.viewVector.transform(matrix4f);

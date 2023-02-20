@@ -94,7 +94,7 @@ public class VUtil {
         return r == 0 ? num : num + align - r;
     }
 
-    public static Matrix4f convert(com.mojang.math.Matrix4f src) {
+    public static Matrix4f convert(org.joml.Matrix4f src) {
         try(MemoryStack stack = stackPush()) {
             FloatBuffer fb = stack.mallocFloat(16);
             src.store(fb);

@@ -1,6 +1,6 @@
 package net.vulkanmod.mixin.util;
 
-import com.mojang.math.Matrix4f;
+import org.joml.Matrix4f;
 import org.lwjgl.system.MemoryStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -33,7 +33,7 @@ public class Matrix4fM {
 
             mat4f.get(fb);
 //            matrix4f.readColumnMajor(fb);
-            matrix4f.loadTransposed(fb);
+            matrix4f.setTransposed(fb);
         }
 
 
@@ -75,7 +75,7 @@ public class Matrix4fM {
 
             mat4f.get(fb);
 //            matrix4f.readColumnMajor(fb);
-            matrix4f.loadTransposed(fb);
+            matrix4f.setTransposed(fb);
         }
 
 

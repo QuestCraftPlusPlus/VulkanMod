@@ -1,5 +1,6 @@
 package net.vulkanmod.mixin.texture;
 
+import net.minecraft.client.renderer.texture.SpriteLoader;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.vulkanmod.interfaces.VAbstractTextureI;
 import net.vulkanmod.vulkan.texture.VulkanImage;
@@ -24,7 +25,7 @@ public class MSpriteAtlasTexture {
      * @author
      */
     @Overwrite
-    public void updateFilter(TextureAtlas.Preparations data) {
+    public void updateFilter(SpriteLoader.Preparations data) {
         //this.setFilter(false, data.maxLevel > 0);
     }
 }
