@@ -1,7 +1,7 @@
 package net.vulkanmod.mixin.texture;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.renderer.texture.SpriteLoader;
+import net.minecraft.client.renderer.texture.AtlasSet;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.model.*;
@@ -23,7 +23,7 @@ public abstract class ModelLoaderM {
 
     @Shadow @Final private static Logger LOGGER;
 
-    @Shadow @Final private Map<ResourceLocation, Pair<TextureAtlas, SpriteLoader.Preparations>> atlasPreparations;
+    @Shadow @Final private Map<ResourceLocation, Pair<TextureAtlas, TextureAtlas.Preparations>> atlasPreparations;
 
     @Shadow private @Nullable AtlasSet atlasSet;
 
@@ -42,9 +42,9 @@ public abstract class ModelLoaderM {
 
         TransferQueue.startRecording();
 
-        for (Pair<TextureAtlas, SpriteLoader.Preparations> pair : this.atlasPreparations.values()) {
+        for (Pair<TextureAtlas, TextureAtlas.Preparations> pair : this.atlasPreparations.values()) {
             TextureAtlas textureAtlas = pair.getFirst();
-            SpriteLoader.Preparations preparations = pair.getSecond();
+            TextureAtlas.Preparations preparations = pair.getSecond();
             textureAtlas.reload(preparations);
             textureManager.register(textureAtlas.location(), textureAtlas);
             textureManager.bindForSetup(textureAtlas.location());

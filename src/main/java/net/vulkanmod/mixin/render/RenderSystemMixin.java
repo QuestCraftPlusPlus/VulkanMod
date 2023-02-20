@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -13,8 +15,6 @@ import net.vulkanmod.vulkan.Drawer;
 import net.vulkanmod.vulkan.Pipeline;
 import net.vulkanmod.vulkan.VRenderSystem;
 import net.vulkanmod.vulkan.texture.VTextureSelector;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -403,9 +403,9 @@ public abstract class RenderSystemMixin {
     @Overwrite(remap = false)
     public static void resetTextureMatrix() {
         if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> textureMatrix.identity());
+            RenderSystem.recordRenderCall(() -> textureMatrix.setIdentity());
         } else {
-            textureMatrix.identity();
+            textureMatrix.setIdentity();
             VRenderSystem.setTextureMatrix(textureMatrix);
         }
     }

@@ -5,8 +5,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
@@ -73,13 +73,13 @@ public class EnchantmentScreenM extends AbstractContainerScreen<EnchantmentMenu>
         Drawer.setViewport((this.width - 320) / 2 * m, (this.height - 240) / 2 * m, 320 * m, 240 * m);
 
         Matrix4f matrix4f = Matrix4f.createTranslateMatrix(-0.34f, 0.23f, 0.0f);
-        matrix4f.mul(Matrix4f.perspective(90.0, 1.3333334f, 9.0f, 80.0f));
+        matrix4f.multiply(Matrix4f.perspective(90.0, 1.3333334f, 9.0f, 80.0f));
         RenderSystem.backupProjectionMatrix();
         RenderSystem.setProjectionMatrix(matrix4f);
         poseStack.pushPose();
         PoseStack.Pose pose = poseStack.last();
-        pose.pose().identity();
-        pose.normal().identity();
+        pose.pose().setIdentity();
+        pose.normal().setIdentity();
         poseStack.translate(0.0, 3.3f, 1984.0);
         float g = 5.0f;
         poseStack.scale(5.0f, 5.0f, 5.0f);

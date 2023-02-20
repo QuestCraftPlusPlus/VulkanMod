@@ -24,7 +24,7 @@ public class Util {
         return directions;
     }
 
-    public static Matrix4f convertMatrix(org.joml.Matrix4f in) {
+    public static Matrix4f convertMatrix(com.mojang.math.Matrix4f in) {
         Matrix4f out;
 
         try(MemoryStack stack = MemoryStack.stackPush()) {
