@@ -3,11 +3,11 @@ package net.vulkanmod.mixin.render;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
-import com.mojang.math.Vector4f;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Vec3i;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +32,7 @@ public interface VertexConsumerM {
         Vec3i vec3i = quad.getDirection().getNormal();
         Vector3f vec3f = new Vector3f(vec3i.getX(), vec3i.getY(), vec3i.getZ());
         Matrix4f matrix4f = matrixEntry.pose();
-        vec3f.transform(matrixEntry.normal());
+        vec3f.mul(matrixEntry.normal());
 
         int j = js.length / 8;
         try (MemoryStack memoryStack = MemoryStack.stackPush()){
@@ -74,7 +74,7 @@ public interface VertexConsumerM {
                 n = MemoryUtil.memGetFloat(memAddress + 20);
 
                 Vector4f vector4f = new Vector4f(f, g, h, 1.0f);
-                vector4f.transform(matrix4f);
+                vector4f.mul(matrix4f);
 
                 this.vertex(vector4f.x(), vector4f.y(), vector4f.z(), o, p, q, 1.0f, m, n, overlay, r, vec3f.x(), vec3f.y(), vec3f.z());
             }

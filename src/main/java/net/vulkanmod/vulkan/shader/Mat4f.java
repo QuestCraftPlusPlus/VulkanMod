@@ -1,13 +1,12 @@
 package net.vulkanmod.vulkan.shader;
 
-import com.mojang.math.Matrix4f;
 import net.vulkanmod.vulkan.VRenderSystem;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
-public class Mat4f extends Field {
+public class Mat4f extends Field<ByteBuffer> {
     //private Supplier<Matrix4f> set;
 
     protected Mat4f(String name, AlignedStruct ubo) {
@@ -26,11 +25,8 @@ public class Mat4f extends Field {
         }
     }
 
-    public void update(FloatBuffer fb) {
-    }
-
     public void update(ByteBuffer buffer) {
-        ByteBuffer src = (ByteBuffer) set.get();
+        ByteBuffer src = set.get();
 
         float[] floats = new float[16];
         src.asFloatBuffer().get(floats);

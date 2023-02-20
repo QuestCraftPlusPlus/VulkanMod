@@ -17,11 +17,14 @@
     "debug.GlDebugInfoM",
     "debug.KeyboardHandlerM",
 
-    "gui.ChatHudM",
+    "gui.ChatComponentM",
     "gui.DebugHudM",
     "gui.InGameHudM",
 
+    "matrix.CubeMapM",
+    "matrix.GameRendererM",
     "matrix.Matrix4fM",
+    "matrix.MinecraftM",
 
     "render.BakedQuadFactoryM",
     "render.BufferBuilderM",
@@ -56,7 +59,6 @@
     "texture.VNativeImage",
     "texture.ModelLoaderM",
 
-    "util.Matrix4fM",
     "util.ScreenshotRecorderM",
 
     "WindowMixin"

@@ -5,7 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
-public class Vec1f extends Field {
+public class Vec1f extends Field<Float> {
 
     protected Vec1f(String name, AlignedStruct struct) {
         super(name, 1, 1, struct.getCurrentOffset());
@@ -23,17 +23,11 @@ public class Vec1f extends Field {
         }
     }
 
-    void update(FloatBuffer fb) {
-        float f = (float) this.set.get();
-        fb.position(offset);
-        fb.put(f);
-    }
-
     void update(ByteBuffer buffer) {
         //update(buffer.asFloatBuffer());
 
-        float f = (float) this.set.get();
-        buffer.position(offset * 4);
+        float f = this.set.get();
+        buffer.position(offset << 2);
         buffer.putFloat(f);
     }
 }

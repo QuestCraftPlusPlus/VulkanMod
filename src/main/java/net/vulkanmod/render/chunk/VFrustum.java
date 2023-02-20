@@ -1,9 +1,9 @@
 package net.vulkanmod.render.chunk;
 
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector4f;
 import net.vulkanmod.render.chunk.util.Util;
 import org.joml.FrustumIntersection;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 public class VFrustum {
 
@@ -54,15 +54,13 @@ public class VFrustum {
     }
 
     private void calculateFrustum(Matrix4f modelViewMatrix, Matrix4f projMatrix) {
-        Matrix4f matrix4f = projMatrix.copy();
-        matrix4f.multiply(modelViewMatrix);
+        Matrix4f matrix4f = new Matrix4f(projMatrix);
+        matrix4f.mul(modelViewMatrix);
         matrix4f.transpose();
         this.viewVector = new Vector4f(0.0F, 0.0F, 1.0F, 0.0F);
-        this.viewVector.transform(matrix4f);
+        this.viewVector.mul(matrix4f);
 
-        org.joml.Matrix4f P = Util.convertMatrix(projMatrix);
-        org.joml.Matrix4f MV = Util.convertMatrix(modelViewMatrix);
-        this.frustum = new FrustumIntersection(P.mul(MV), true);
+        this.frustum = new FrustumIntersection(projMatrix.mul(modelViewMatrix), true);
 
         this.getPlane(matrix4f, -1, 0, 0, 0);
         this.getPlane(matrix4f, 1, 0, 0, 1);
@@ -72,9 +70,9 @@ public class VFrustum {
         this.getPlane(matrix4f, 0, 0, 1, 5);
     }
 
-    private void getPlane(Matrix4f p_113021_, int p_113022_, int p_113023_, int p_113024_, int p_113025_) {
+    private void getPlane(Matrix4f matrix4f, int p_113022_, int p_113023_, int p_113024_, int p_113025_) {
         Vector4f vector4f = new Vector4f((float)p_113022_, (float)p_113023_, (float)p_113024_, 1.0F);
-        vector4f.transform(p_113021_);
+        vector4f.mul(matrix4f);
         vector4f.normalize();
         this.frustumData[p_113025_] = vector4f;
     }

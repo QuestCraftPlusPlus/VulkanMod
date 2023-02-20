@@ -467,13 +467,13 @@ public class Pipeline {
 
                 offset += 4;
             }
-//            else if (usage == VertexFormatElement.Usage.PADDING)
-//            {
-////                posDescription.format(VK_FORMAT_R8_SNORM);
-////                posDescription.offset(offset);
-//
-////                offset += 1;
-//            }
+            else if (usage == VertexFormatElement.Usage.PADDING)
+            {
+//                posDescription.format(VK_FORMAT_R8_SNORM);
+//                posDescription.offset(offset);
+
+//                offset += 1;
+            }
 
             else {
                 throw new RuntimeException("Unknown format:");

@@ -4,19 +4,30 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
+import java.util.function.Consumer;
+
 import static net.vulkanmod.config.widget.OptionWidget.WIDGETS_TEXTURE;
 
-public class CustomButtonWidget extends Button {
+public class CustomButtonWidget extends AbstractButton {
+    int x;
+    int y;
     boolean selected = false;
+    Consumer<CustomButtonWidget> onPress;
 
-    public CustomButtonWidget(int x, int y, int width, int height, Component message, OnPress onPress) {
-        super(x, y, width, height, message, onPress);
+    public CustomButtonWidget(int x, int y, int width, int height, Component message, Consumer<CustomButtonWidget> onPress) {
+        super(x, y, width, height, message);
+        this.x = x;
+        this.y = y;
+        this.onPress = onPress;
     }
+
+
 
     public void renderButton(PoseStack matrices, int mouseX, int mouseY, float delta) {
         Minecraft minecraftClient = Minecraft.getInstance();
@@ -46,7 +57,17 @@ public class CustomButtonWidget extends Button {
         }
     }
 
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
+
+    }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    @Override
+    public void onPress() {
+        this.onPress.accept(this);
     }
 }

@@ -6,7 +6,7 @@ import org.joml.Vector2f;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
-public class Vec2f extends Field {
+public class Vec2f extends Field<Vector2f> {
 
     protected Vec2f(String name, AlignedStruct ubo) {
         super(name, 2, 4, ubo.getCurrentOffset());
@@ -19,24 +19,10 @@ public class Vec2f extends Field {
         if (this.name.equals("ScreenSize")) this.set = VRenderSystem::getScreenSize;
     }
 
-    void update(FloatBuffer fb) {
-        Vector2f vec2 = (Vector2f) this.set.get();
-        float[] floats = new float[2];
-
-        floats[0] = vec2.x();
-        floats[1] = vec2.y();
-
-        fb.position(offset);
-
-        for(float f : floats) {
-            fb.put(f);
-        }
-    }
-
     void update(ByteBuffer buffer) {
         //update(buffer.asFloatBuffer());
 
-        Vector2f vec2 = (Vector2f) this.set.get();
+        Vector2f vec2 = this.set.get();
         float[] floats = new float[2];
 
         floats[0] = vec2.x();

@@ -1,22 +1,10 @@
 package net.vulkanmod.mixin.render;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexBuffer;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.PostChain;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
-import net.minecraft.core.BlockPos;
-import net.vulkanmod.interfaces.ShaderMixed;
-import net.vulkanmod.vulkan.Drawer;
-import net.vulkanmod.vulkan.Pipeline;
-import net.vulkanmod.vulkan.VRenderSystem;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,7 +13,6 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(LevelRenderer.class)
 public abstract class LevelRendererMixin {
-    //TODO: remove class
 
     @Shadow @Final private Minecraft minecraft;
 

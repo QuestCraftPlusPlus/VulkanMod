@@ -8,6 +8,10 @@ import net.minecraft.core.BlockMath;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -44,13 +48,13 @@ public class BakedQuadFactoryM {
         float f = blockFaceUV.getU(blockFaceUV.getReverseIndex(0));
         float g = blockFaceUV.getV(blockFaceUV.getReverseIndex(0));
         Vector4f vector4f = new Vector4f(f * d, g * d, 0.0f, 1.0f);
-        vector4f.transform(matrix4f);
+        vector4f.mul(matrix4f);
         float h = 16.0f * vector4f.x();
         float i = 16.0f * vector4f.y();
         float j = blockFaceUV.getU(blockFaceUV.getReverseIndex(2));
         float k = blockFaceUV.getV(blockFaceUV.getReverseIndex(2));
         Vector4f vector4f2 = new Vector4f(j * d, k * d, 0.0f, 1.0f);
-        vector4f2.transform(matrix4f);
+        vector4f2.mul(matrix4f);
         float l = 16.0f * vector4f2.x();
         float m = 16.0f * vector4f2.y();
         if (Math.signum(j - f) == Math.signum(l - h)) {
@@ -70,7 +74,7 @@ public class BakedQuadFactoryM {
         float r = (float)Math.toRadians(blockFaceUV.rotation);
         Vector3f vec3f = new Vector3f(Mth.cos(r), Mth.sin(r), 0.0f);
         Matrix3f matrix3f = new Matrix3f(matrix4f);
-        vec3f.transform(matrix3f);
+        vec3f.mul(matrix3f);
         int s = Math.floorMod(-((int)Math.round(Math.toDegrees(Math.atan2(vec3f.y(), vec3f.x())) / 90.0)) * 90, 360);
         return new BlockFaceUV(new float[]{n, p, o, q}, s);
     }

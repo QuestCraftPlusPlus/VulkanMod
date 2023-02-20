@@ -28,6 +28,7 @@ public class UniformBuffers {
     private void createUniformBuffers(int size) {
         this.bufferSize = size;
 
+        //TODO update image size
         uniformBuffers = new ArrayList<>(imagesSize);
 
         for(int i = 0; i < imagesSize; ++i) {

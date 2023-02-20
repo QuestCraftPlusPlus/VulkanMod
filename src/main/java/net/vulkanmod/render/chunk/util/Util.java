@@ -24,17 +24,6 @@ public class Util {
         return directions;
     }
 
-    public static Matrix4f convertMatrix(com.mojang.math.Matrix4f in) {
-        Matrix4f out;
-
-        try(MemoryStack stack = MemoryStack.stackPush()) {
-            FloatBuffer fb = stack.mallocFloat(16);
-            in.store(fb);
-            out = new Matrix4f(fb);
-        }
-        return out;
-    }
-
     public static long posLongHash(int x, int y, int z) {
         return (long)x & 0x00000000FFFFL | ((long) z << 16) & 0x0000FFFF0000L | ((long) y << 32) & 0xFFFF00000000L;
     }

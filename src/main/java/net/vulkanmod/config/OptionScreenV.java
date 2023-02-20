@@ -28,8 +28,8 @@ public class OptionScreenV extends Screen {
     private CustomButtonWidget graphicsButton;
     private CustomButtonWidget otherButton;
 
-    private Button doneButton;
-    private Button applyButton;
+    private CustomButtonWidget doneButton;
+    private CustomButtonWidget applyButton;
 
     public OptionScreenV(Component title, Screen parent) {
         super(title);
@@ -175,7 +175,7 @@ public class OptionScreenV extends Screen {
         this.applyButton.active = modified;
     }
 
-    public void setOptionList(Button button, OptionList2 optionList) {
+    public void setOptionList(CustomButtonWidget button, OptionList2 optionList) {
         this.currentList = optionList;
 
         this.buildPage();
@@ -184,6 +184,6 @@ public class OptionScreenV extends Screen {
         this.graphicsButton.setSelected(false);
         this.otherButton.setSelected(false);
 
-        ((CustomButtonWidget)button).setSelected(true);
+        button.setSelected(true);
     }
 }

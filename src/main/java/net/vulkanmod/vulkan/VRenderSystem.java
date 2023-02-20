@@ -7,9 +7,9 @@ import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.lwjgl.system.MemoryUtil;
 import oshi.SystemInfo;
@@ -128,12 +128,12 @@ public class VRenderSystem {
     }
 
     public static void applyModelViewMatrix(Matrix4f mat) {
-        mat.store(modelViewMatrix.asFloatBuffer());
+        mat.get(modelViewMatrix.asFloatBuffer());
         //MemoryUtil.memPutFloat(MemoryUtil.memAddress(modelViewMatrix), 1);
     }
 
     public static void applyProjectionMatrix(Matrix4f mat) {
-        mat.store(projectionMatrix.asFloatBuffer());
+        mat.get(projectionMatrix.asFloatBuffer());
     }
 
     public static void calculateMVP() {
@@ -144,7 +144,7 @@ public class VRenderSystem {
     }
 
     public static void setTextureMatrix(Matrix4f mat) {
-        mat.store(TextureMatrix.asFloatBuffer());
+        mat.get(TextureMatrix.asFloatBuffer());
     }
 
     public static ByteBuffer getTextureMatrix() {

@@ -6,7 +6,9 @@ import org.joml.Vector4f;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
+import sun.misc.Unsafe;
 
+import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
@@ -17,6 +19,20 @@ import static org.lwjgl.util.vma.Vma.vmaUnmapMemory;
 public class VUtil {
     public static final int UINT32_MAX = 0xFFFFFFFF;
     public static final long UINT64_MAX = 0xFFFFFFFFFFFFFFFFL;
+
+    public static final Unsafe UNSAFE;
+
+    static {
+        Field f = null;
+        try {
+            f = Unsafe.class.getDeclaredField("theUnsafe");
+            f.setAccessible(true);
+            UNSAFE = (Unsafe) f.get(null);
+
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void memcpy(ByteBuffer buffer, short[] indices) {
 
@@ -92,15 +108,6 @@ public class VUtil {
     public static int align(int num, int align) {
         int r = num % align;
         return r == 0 ? num : num + align - r;
-    }
-
-    public static Matrix4f convert(com.mojang.math.Matrix4f src) {
-        try(MemoryStack stack = stackPush()) {
-            FloatBuffer fb = stack.mallocFloat(16);
-            src.store(fb);
-            Matrix4f dst = new Matrix4f(fb);
-            return dst;
-        }
     }
 
     public static int packColor(float r, float g, float b, float a) {

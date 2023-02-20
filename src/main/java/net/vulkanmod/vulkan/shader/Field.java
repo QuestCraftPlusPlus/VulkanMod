@@ -4,14 +4,14 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.function.Supplier;
 
-public abstract class Field {
+public abstract class Field<T> {
     protected int offset;
     protected final int align;
     protected int size;
     protected int type;
     protected String name;
     protected FloatBuffer fieldBuffer;
-    protected Supplier<Object> set;
+    protected Supplier<T> set;
 
     protected Field(String name, int size, int align, int offset) {
         this.name = name;
@@ -33,26 +33,22 @@ public abstract class Field {
 
     abstract void setFunction();
 
-    abstract void update(FloatBuffer fb);
-
     abstract void update(ByteBuffer buffer);
 
-    public static Field createField(String type, String name, int count, AlignedStruct ubo) {
-        if(type.equals("matrix4x4")) {
-            return new Mat4f(name, ubo);
-        }
-        else if(type.equals("float")) {
-            if (count == 4) return new Vec4f(name, ubo);
-            else if (count == 3) return new Vec3f(name,ubo);
-            else if (count == 2) return new Vec2f(name,ubo);
-            else return new Vec1f(name, ubo);
-        }
-        else if(type.equals("int")) {
-            return new Vec1i(name, ubo);
-        }
-        else {
-            throw new RuntimeException("not admitted type..");
-        }
+    public static Field<?> createField(String type, String name, int count, AlignedStruct ubo) {
+        return switch (type) {
+            case "matrix4x4" -> new Mat4f(name, ubo);
+            case "float" -> switch (count) {
+                case 4 -> new Vec4f(name, ubo);
+                case 3 -> new Vec3f(name, ubo);
+                case 2 -> new Vec2f(name, ubo);
+                case 1 -> new Vec1f(name, ubo);
+
+                default -> throw new IllegalStateException("Unexpected value: " + count);
+            };
+            case "int" -> new Vec1i(name, ubo);
+            default -> throw new RuntimeException("not admitted type..");
+        };
     }
 
     public int getOffset() {

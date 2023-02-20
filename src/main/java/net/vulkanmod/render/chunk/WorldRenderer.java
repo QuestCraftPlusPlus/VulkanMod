@@ -5,7 +5,6 @@ import com.google.common.collect.Queues;
 import com.google.common.collect.Sets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
@@ -35,6 +34,7 @@ import net.minecraft.world.phys.Vec3;
 import net.vulkanmod.vulkan.Drawer;
 import net.vulkanmod.vulkan.Pipeline;
 import net.vulkanmod.vulkan.VRenderSystem;
+import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -500,28 +500,28 @@ public class WorldRenderer {
     }
 
     public void renderChunkLayer(RenderType renderType, PoseStack poseStack, double camX, double camY, double camZ, Matrix4f projection) {
-//        //debug
-//        Profiler p = Profiler.getProfiler("chunks");
-//        RenderType solid = RenderType.solid();
-//        RenderType cutout = RenderType.cutout();
-//        RenderType cutoutMipped = RenderType.cutoutMipped();
-//        RenderType translucent = RenderType.translucent();
-//        RenderType tripwire = RenderType.tripwire();
-//
-//        String layerName;
-//        if (solid.equals(renderType)) {
-//            layerName = "solid";
-//        } else if (cutout.equals(renderType)) {
-//            layerName = "cutout";
-//        } else if (cutoutMipped.equals(renderType)) {
-//            layerName = "cutoutMipped";
-//        } else if (tripwire.equals(renderType)) {
-//            layerName = "tripwire";
-//        } else if (translucent.equals(renderType)) {
-//            layerName = "translucent";
-//        } else layerName = "unk";
-//
-//        p.pushMilestone("layer " + layerName);
+        //debug
+        Profiler p = Profiler.getProfiler("chunks");
+        RenderType solid = RenderType.solid();
+        RenderType cutout = RenderType.cutout();
+        RenderType cutoutMipped = RenderType.cutoutMipped();
+        RenderType translucent = RenderType.translucent();
+        RenderType tripwire = RenderType.tripwire();
+
+        String layerName;
+        if (solid.equals(renderType)) {
+            layerName = "solid";
+        } else if (cutout.equals(renderType)) {
+            layerName = "cutout";
+        } else if (cutoutMipped.equals(renderType)) {
+            layerName = "cutoutMipped";
+        } else if (tripwire.equals(renderType)) {
+            layerName = "tripwire";
+        } else if (translucent.equals(renderType)) {
+            layerName = "translucent";
+        } else layerName = "unk";
+
+        p.pushMilestone("layer " + layerName);
 
         RenderSystem.assertOnRenderThread();
         renderType.setupRenderState();
@@ -630,7 +630,7 @@ public class WorldRenderer {
                         int j1 = sortedset.last().getProgress();
                         if (j1 >= 0) {
                             PoseStack.Pose posestack$pose1 = poseStack.last();
-                            VertexConsumer vertexconsumer = new SheetedDecalTextureGenerator(this.renderBuffers.crumblingBufferSource().getBuffer(ModelBakery.DESTROY_TYPES.get(j1)), posestack$pose1.pose(), posestack$pose1.normal());
+                            VertexConsumer vertexconsumer = new SheetedDecalTextureGenerator(this.renderBuffers.crumblingBufferSource().getBuffer(ModelBakery.DESTROY_TYPES.get(j1)), posestack$pose1.pose(), posestack$pose1.normal(), 1.0f);
                             multibuffersource1 = (p_194349_) -> {
                                 VertexConsumer vertexconsumer3 = bufferSource.getBuffer(p_194349_);
                                 return p_194349_.affectsCrumbling() ? VertexMultiConsumer.create(vertexconsumer, vertexconsumer3) : vertexconsumer3;
