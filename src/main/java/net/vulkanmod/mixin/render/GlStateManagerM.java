@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
+import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 @Mixin(GlStateManager.class)
@@ -87,4 +88,30 @@ public class GlStateManagerM {
     public static void _pixelStore(int pname, int param) {
 
     }
+
+    @Overwrite(remap = false)
+    public static void _blendEquation(int i) {
+
+    }
+
+    @Overwrite(remap = false)
+    public static void _glUniformMatrix4(int i, boolean bl, FloatBuffer floatBuffer) {
+
+    }
+
+    @Overwrite(remap = false)
+    public static void _glUniform4(int i, IntBuffer intBuffer) {
+
+    }
+
+    @Overwrite(remap = false)
+    public static void _glUniform4(int i, FloatBuffer floatBuffer) {
+
+    }
+
+    @Overwrite(remap = false)
+    public static void _glUseProgram(int i) {
+
+    }
+
 }
